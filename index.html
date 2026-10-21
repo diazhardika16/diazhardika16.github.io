@@ -84,6 +84,12 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 .twb{width:32px;height:auto;margin-left:auto;flex:none;font-size:0}
 .tw-btn{display:flex;align-items:center;background:#fff;color:#0b3a8f;border-color:#0b3a8f}
 .twi{height:22px;width:auto;margin-right:.4rem}
+.ev{display:flex;gap:1rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.9rem}
+.ev.up{border-color:var(--blue)}
+.evd{flex:none;width:64px;text-align:center;line-height:1.1}.evd b{display:block;font:700 1.8rem "Playfair Display",Georgia,serif}.evd span{display:block;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.ev h4{margin:0 0 .2rem;font:700 1.1rem Inter,system-ui,sans-serif}.ev .pl{color:var(--muted);font-size:.92rem}.ev p{margin:.3rem 0 .5rem}.ev .btn{padding:.4rem .9rem;font-size:.85rem;margin:0}
+.sub2{margin:2rem 0 .8rem;font-size:1.2rem}
+#hv-list{max-width:760px;margin:0 auto}
 </style><script src="lang.js" defer></script><meta name="google-adsense-account" content="ca-pub-8505911296307431">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8505911296307431"
      crossorigin="anonymous"></script>
@@ -126,6 +132,12 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 <a class="btn blue" id="k-buy" href="#" target="_blank" rel="noopener">Beli sekarang</a>
 <div id="k-admin" class="kadmin" hidden><button class="btn line" id="k-ed">&#9998; Edit teks</button><button class="btn line" id="k-url">Ubah link beli</button><button class="btn blue" id="k-sv" hidden>Simpan</button><span id="k-st" class="note" role="status"></span></div>
 <p class="mlink"><a href="#" id="lg-link">Masuk penulis</a></p></div></div>
+</div></section>
+
+<section id="jadwal" class="sec"><div class="wrap"><h2 class="c">Jadwal Pembicara &amp; Event</h2>
+<p class="sub">Kegiatan saya sebagai pembicara, trainer, dan narasumber.</p>
+<div id="hv-list"><p class="note">Memuat jadwal...</p></div>
+<p class="c" style="margin-top:1.4rem"><a class="btn line" href="cv.html#jadwal">Lihat semua jadwal &amp; CV &rarr;</a></p>
 </div></section>
 
 <section class="media ew"><img class="bg" src="endless-war.jpg" alt="" onerror="this.remove()"><div class="wrap">
@@ -254,4 +266,30 @@ if(mb)mb.addEventListener("click",()=>{tp.hidden=true;tb.setAttribute("aria-expa
 }catch(e){console.error(e)}
 </script>
 <script src="i18n.js"></script>
+<script type="module">
+const cfg={apiKey:"AIzaSyCeFURXeByDgD4Ei2LNElAPpbsY29So3xo",authDomain:"logikapositif-871c7.firebaseapp.com",projectId:"logikapositif-871c7",appId:"1:15150768014:web:7438da241ce4ea02850edf"},V="https://www.gstatic.com/firebasejs/10.12.2/",L=document.getElementById("hv-list");
+try{
+const {initializeApp,getApps,getApp}=await import(V+"firebase-app.js"),fs=await import(V+"firebase-firestore.js");
+const db=fs.getFirestore(getApps().length?getApp():initializeApp(cfg));
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const lang=()=>document.documentElement.lang==="en"?"en-US":"id-ID";
+const parseD=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||"");return m?new Date(+m[1],+m[2]-1,+m[3]):null};
+const todayS=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const okUrl=u=>/^https?:\/\//i.test(u||"");
+function card(e,up){const c=el("article","ev"+(up?" up":"")),d=el("div","evd"),dt=parseD(e.date);
+  if(dt){d.append(el("b","",String(dt.getDate())),el("span","",dt.toLocaleDateString(lang(),{month:"short"})),el("span","",String(dt.getFullYear())))}else d.append(el("span","","-"));
+  const b=el("div");b.append(el("h4","",e.title||""));if(e.place)b.append(el("div","pl",e.place));if(e.desc)b.append(el("p","",e.desc));
+  if(okUrl(e.url)){const a=el("a","btn blue","Info selengkapnya");a.href=e.url;a.target="_blank";a.rel="noopener";b.append(a)}
+  c.append(d,b);return c}
+fs.onSnapshot(fs.doc(db,"captions","cv-jadwal"),d=>{
+  const ev=(d.exists()&&Array.isArray(d.data().items))?d.data().items:[],t=todayS();
+  const up=ev.filter(e=>(e.date||"")>=t).sort((a,b)=>a.date<b.date?-1:1).slice(0,4);
+  L.textContent="";
+  if(up.length){up.forEach(e=>L.append(card(e,true)));return}
+  L.append(el("p","note","Belum ada jadwal mendatang."));
+  const past=ev.filter(e=>(e.date||"")<t).sort((a,b)=>a.date<b.date?1:-1).slice(0,2);
+  if(past.length){L.append(el("h3","sub2","Kegiatan sebelumnya"));past.forEach(e=>L.append(card(e,false)))}
+},()=>{L.textContent="Jadwal belum bisa dimuat."});
+}catch(e){L.textContent="Jadwal belum bisa dimuat."}
+</script>
 </body></html>
