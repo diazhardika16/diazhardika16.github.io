@@ -205,7 +205,7 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 (function(){var st=document.querySelector(".kstrip"),sl=[].slice.call(st.children),ct=document.getElementById("kcount"),lb=document.getElementById("klb"),li=document.getElementById("klb-img"),k=0;
 function idx(){return Math.round(st.scrollLeft/st.clientWidth)}
 function go(n){n=(n+sl.length)%sl.length;st.scrollTo({left:n*st.clientWidth,behavior:"smooth"})}
-st.addEventListener("scroll",function(){ct.textContent=(idx()+1)+" / "+sl.length});
+var lastI=-1;st.addEventListener("scroll",function(){var n=idx();ct.textContent=(n+1)+" / "+sl.length;if(n!==lastI){lastI=n;document.dispatchEvent(new CustomEvent("kaos:slide",{detail:n}))}});
 document.querySelector(".kshow .kprev").onclick=function(){go(idx()-1)};document.querySelector(".kshow .knext").onclick=function(){go(idx()+1)};
 function show(n,d){for(var t=0;t<sl.length;t++){k=(n+sl.length)%sl.length;if(!sl[k].classList.contains("missing"))break;n=k+d}var im=sl[k].querySelector("img");li.src=im.src;li.alt=im.alt}
 sl.forEach(function(s,n){s.onclick=function(){if(s.classList.contains("missing"))return;show(n,1);lb.showModal()}});
@@ -220,18 +220,29 @@ const $=id=>document.getElementById(id),V="https://www.gstatic.com/firebasejs/10
 try{
 const {initializeApp,getApps,getApp}=await import(V+"firebase-app.js"),au=await import(V+"firebase-auth.js"),fs=await import(V+"firebase-firestore.js");
 const app=getApps().length?getApp():initializeApp(cfg),auth=au.getAuth(app),db=fs.getFirestore(app),ref=fs.doc(db,"captions","kaos");
-const F={t:$("k-t"),p:$("k-p"),d:$("k-d")};let url="",editing=false,dirty=false,first=true;
-fs.onSnapshot(ref,s=>{if(!s.exists()||editing)return;const v=s.data();for(const k in F)if(v[k]!=null)F[k].textContent=v[k];if(v.url&&ok(v.url)){url=v.url;$("k-buy").href=url}});
+const F={t:$("k-t"),p:$("k-p"),d:$("k-d")},KS=["t","p","d","url"];
+// Setiap desain (1, 2, 3) punya judul, harga, deskripsi, dan link beli sendiri. Yang belum diisi mengikuti Desain 1.
+const DEF={t:F.t.textContent,p:F.p.textContent,d:F.d.textContent,url:""};
+let items=[{},{},{}],cur=0,editing=false,dirty=false,first=true;
+const res=(i,k)=>{const v=(items[i]||{})[k];if(v!=null&&v!=="")return v;const b=(items[0]||{})[k];return(b!=null&&b!=="")?b:DEF[k]};
+const showItem=()=>{for(const k in F)F[k].textContent=res(cur,k);const u=res(cur,"url");$("k-buy").href=ok(u)?u:"#"};
+const commit=()=>{if(!editing)return;for(const k in F){const v=F[k].textContent.trim();if(v!==String(res(cur,k)).trim()){items[cur][k]=v;dirty=true}}};
+const fromDoc=v=>{const arr=Array.isArray(v.items)?v.items:[];return[0,1,2].map(i=>{const o=Object.assign({},arr[i]||{});if(i===0)for(const k of KS)if((o[k]==null||o[k]==="")&&v[k]!=null)o[k]=v[k];return o})};
+fs.onSnapshot(ref,s=>{if(editing)return;if(s.exists())items=fromDoc(s.data());showItem()});
+document.addEventListener("kaos:slide",e=>{commit();cur=Math.min(2,Math.max(0,e.detail|0));showItem();if(editing)$("k-st").textContent="Mengedit teks Desain "+(cur+1)+". Ketik lalu tekan Simpan."});
 const lk=$("lg-link");
 au.onAuthStateChanged(auth,u=>{$("k-admin").hidden=!(u&&u.uid===ADMIN_UID&&u.emailVerified);lk.textContent=u?"Keluar":"Masuk penulis";if(first){first=false;if(!u&&location.hash==="#masuk")$("lg").showModal()}});
 lk.onclick=e=>{e.preventDefault();if(auth.currentUser)au.signOut(auth);else{$("lg-msg").textContent="";$("lg").showModal()}};
 $("lg-go").onclick=async()=>{try{await au.signInWithEmailAndPassword(auth,$("lg-e").value.trim(),$("lg-p").value);$("lg").close()}catch(x){$("lg-msg").textContent="Gagal masuk: "+x.code}};
 $("lg-cancel").onclick=()=>$("lg").close();
 Object.values(F).forEach(n=>n.addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()}));
-const setEdit=on=>{editing=on;document.body.classList.toggle("kedit",on);Object.values(F).forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Klik teks lalu ketik, tekan Simpan.":""};
+const setEdit=on=>{if(!on)commit();editing=on;document.body.classList.toggle("kedit",on);Object.values(F).forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Mengedit teks Desain "+(cur+1)+". Geser ke desain lain untuk mengeditnya, lalu tekan Simpan.":""};
 $("k-ed").onclick=()=>setEdit(!editing);
-$("k-url").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang (diawali https://), misalnya link WhatsApp atau toko:",url);if(v===null)return;if(!ok(v.trim())){$("k-st").textContent="Link harus diawali https://";return}url=v.trim();$("k-buy").href=url;dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link diubah, tekan Simpan."};
-$("k-sv").onclick=async()=>{try{await auth.currentUser.getIdToken(true);await fs.setDoc(ref,{t:F.t.textContent.trim(),p:F.p.textContent.trim(),d:F.d.textContent.trim(),url,updatedAt:fs.serverTimestamp()},{merge:true});dirty=false;$("k-st").textContent="Tersimpan."}catch(x){$("k-st").textContent="Gagal simpan: "+(x.code||x.message)}};
+$("k-url").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang untuk Desain "+(cur+1)+" (diawali https://), misalnya link WhatsApp atau toko:",res(cur,"url")||"");if(v===null)return;if(!ok(v.trim())){$("k-st").textContent="Link harus diawali https://";return}items[cur].url=v.trim();showItem();dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link Desain "+(cur+1)+" diubah, tekan Simpan."};
+$("k-sv").onclick=async()=>{commit();try{await auth.currentUser.getIdToken(true);
+const clean=items.map(o=>{const r={};for(const k of KS){const v=(o[k]==null?"":String(o[k])).trim();if(v)r[k]=v}return r});
+await fs.setDoc(ref,{items:clean,t:res(0,"t"),p:res(0,"p"),d:res(0,"d"),url:res(0,"url"),updatedAt:fs.serverTimestamp()},{merge:true});
+dirty=false;$("k-st").textContent="Tersimpan."}catch(x){$("k-st").textContent="Gagal simpan: "+(x.code||x.message)}};
 }catch(e){console.error(e)}
 </script>
 
