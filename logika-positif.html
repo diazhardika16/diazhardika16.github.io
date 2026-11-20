@@ -25,11 +25,6 @@ p{margin:0 0 1em}.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}.c{text-
 .eyebrow{letter-spacing:.2em;font-size:.78rem;font-weight:600;margin:0 0 .9rem;text-transform:uppercase}
 .hero{padding:7rem 0 6rem}.hero h1{font-size:clamp(2.7rem,9vw,5.4rem);letter-spacing:.03em;margin-bottom:.3em}.hero .lead{max-width:30ch;font-size:1.25rem;opacity:.92}
 .sec{padding:4.5rem 0}.sec.alt{background:#fff}
-.pil{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
-@media(max-width:1000px){.pil{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.pil{grid-template-columns:1fr}}
-.p{min-height:340px;display:flex;align-items:flex-end;padding:1.3rem;border-radius:14px}
-.p::after{background:linear-gradient(#0000 20%,#000d)!important}.p h3{font-size:1.4rem}.p p{font-size:.92rem;opacity:.9}
-.p.k{background:linear-gradient(160deg,#3b2a14,#16110a)}.p.m{background:linear-gradient(160deg,#241a33,#0e0b14)}.p .btn{font-size:.85rem;padding:.5rem .9rem}
 .book{display:grid;gap:2.5rem;align-items:center}@media(min-width:860px){.book{grid-template-columns:1.2fr .8fr}}
 .book .eyebrow{color:var(--muted)}.book h2{font-size:clamp(2.2rem,5vw,3.2rem);margin-bottom:.1em}.st{font-family:"Playfair Display",Georgia,serif;font-size:1.25rem}
 .chk{list-style:none;padding:0;margin:0 0 1.2rem}.chk li{padding-left:1.8rem;position:relative;margin:.3rem 0}.chk li::before{content:"\2713";position:absolute;left:0;color:#fff;background:var(--blue);width:1.15rem;height:1.15rem;border-radius:4px;font-size:.78rem;display:grid;place-items:center;top:.28rem}
@@ -124,6 +119,20 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 .twb{width:32px;height:auto;margin-left:auto;flex:none;font-size:0}
 .tw-btn{display:flex;align-items:center;background:#fff;color:#0b3a8f;border-color:#0b3a8f}
 .twi{height:22px;width:auto;margin-right:.4rem}
+.kcat{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.5rem;align-items:start}
+@media(max-width:900px){.kcat{grid-template-columns:1fr 1fr}}@media(max-width:600px){.kcat{grid-template-columns:1fr}}
+.kcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.kimg{position:relative;display:block;width:100%;aspect-ratio:1/1;padding:0;border:0;background:#fff;cursor:zoom-in}.kimg.missing{cursor:default}
+.kimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.kimg .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.9rem;padding:1rem;text-align:center}
+.kbody{padding:1.1rem 1.2rem 1.4rem;display:flex;flex-direction:column;gap:.45rem}
+.kt{margin:0;font-size:1.2rem;line-height:1.3}.kprice{margin:0;font-weight:700;font-size:1.4rem;color:var(--blue)}.kd{margin:0;font-size:.97rem}
+.kact{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}.kact .btn{margin:0}
+.klinkbtn{display:none}body.kedit .klinkbtn{display:inline-block}
+.gonep{font-style:italic;color:var(--muted);margin:.2em 0 0}
+.blurp{filter:blur(6px);user-select:none;pointer-events:none;margin:.2em 0 .3rem}
+.modl{font-size:.82rem;color:var(--muted)}
+.hid{border:1px dashed var(--line);border-radius:8px;padding:.4rem .6rem;opacity:.75}
 </style><script src="lang.js" defer></script><meta name="google-adsense-account" content="ca-pub-8505911296307431">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8505911296307431"
      crossorigin="anonymous"></script>
@@ -154,14 +163,27 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 
 <section id="dukung" class="sec"><div class="wrap"><h2>Dukung karya ini</h2>
 <div class="card" style="margin-bottom:2rem"><h3>Donasi</h3><p>Setiap donasi membantu saya menulis buku berikutnya dan merawat website ini. Berapa pun jumlahnya, saya berterima kasih.</p><a class="btn blue" href="https://saweria.co/logikapositif" target="_blank" rel="noopener">Kirim donasi</a></div>
-<div class="kaos" id="kaos">
-<div class="kshow" aria-label="Galeri desain kaos"><div class="kstrip" tabindex="0"><figure class="kslide"><span class="ph">Desain kaos 1 segera hadir</span><img src="kaos-1.jpg" alt="Desain kaos Logika Positif 1" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure><figure class="kslide"><span class="ph">Desain kaos 2 segera hadir</span><img src="kaos-2.jpg" alt="Desain kaos Logika Positif 2" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure><figure class="kslide"><span class="ph">Desain kaos 3 segera hadir</span><img src="kaos-3.jpg" alt="Desain kaos Logika Positif 3" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure></div>
-<button class="knav kprev" aria-label="Gambar sebelumnya">&#8249;</button><button class="knav knext" aria-label="Gambar berikutnya">&#8250;</button><span class="kcount" id="kcount">1 / 3</span></div>
-<div class="kinfo"><h3 class="t" id="k-t">Kaos Logika Positif</h3><p class="p" id="k-p">Rp 0</p>
-<p class="d" id="k-d">Deskripsi kaos: bahan, ukuran, dan cerita di balik desainnya.</p>
-<a class="btn blue" id="k-buy" href="#" target="_blank" rel="noopener">Beli sekarang</a>
-<div id="k-admin" class="kadmin" hidden><button class="btn line" id="k-ed">&#9998; Edit teks</button><button class="btn line" id="k-url">Ubah link beli</button><button class="btn blue" id="k-sv" hidden>Simpan</button><span id="k-st" class="note" role="status"></span></div>
-<p class="mlink"><a href="#" id="lg-link">Masuk penulis</a></p></div></div></div></section>
+<h2 style="margin-top:2.5rem">Log Pose</h2>
+<p style="color:var(--muted)">Kaos dengan desain dari dunia karya saya dan teman-teman saya.</p>
+<div class="kcat" id="kaos">
+<article class="kcard" data-i="0">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 1"><span class="ph">Foto kaos 1 segera hadir</span><img src="kaos-1.jpg" alt="Kaos Log Pose 1" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+<article class="kcard" data-i="1">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 2"><span class="ph">Foto kaos 2 segera hadir</span><img src="kaos-2.jpg" alt="Kaos Log Pose 2" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+<article class="kcard" data-i="2">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 3"><span class="ph">Foto kaos 3 segera hadir</span><img src="kaos-3.jpg" alt="Kaos Log Pose 3" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+</div>
+<div id="k-admin" class="kadmin" hidden><button class="btn line" id="k-ed" type="button">&#9998; Edit teks</button><button class="btn blue" id="k-sv" type="button" hidden>Simpan</button><span id="k-st" class="note" role="status"></span></div>
+<p class="mlink"><a href="#" id="lg-link">Masuk penulis</a></p></div></section>
 
 <section id="curhatan" class="sec alt"><div class="wrap"><h2>Curhatan Kita</h2>
 <p style="color:var(--muted)">Ruang aman untuk berbagi pikiran, perasaan, dan pertanyaan tentang hidup. Pilih satu curhatan untuk dibaca selengkapnya dan ditanggapi.</p>
@@ -191,7 +213,8 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 <h2 id="tp-t"></h2><p class="meta"><span id="tp-d"></span> &middot; Diaz Hardika</p>
 <div class="share">Bagikan <a id="s-wa" target="_blank" rel="noopener">WhatsApp</a><a id="s-fb" target="_blank" rel="noopener">Facebook</a><a id="s-x" target="_blank" rel="noopener">X</a><button id="s-cp">Salin tautan</button></div>
 <div id="tp-b" class="body"></div>
-<div id="tp-adm" hidden style="margin-bottom:1.4rem"><button class="btn line" id="tp-del">Hapus curhatan ini</button></div>
+<div id="te-box" class="form" hidden><input id="te-t" placeholder="Judul" maxlength="120"><textarea id="te-b" rows="9" maxlength="8000" placeholder="Isi curhatan..."></textarea><p id="te-m" class="note" role="status"></p><div class="btns"><button class="btn blue" id="te-go" type="button">Simpan perubahan</button><button class="btn line" id="te-x" type="button">Batal</button></div></div>
+<div id="tp-adm" hidden style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.4rem"><button class="btn line" id="tp-edit" type="button">&#9998; Edit curhatan</button><button class="btn line" id="tp-del" type="button">Hapus curhatan ini</button></div>
 <h3>Komentar</h3><p id="msg" class="note" role="status"></p>
 <div id="b-login" class="box form"><input id="i-nama" placeholder="Nama tampilan (untuk daftar)" autocomplete="nickname"><input id="i-email" type="email" placeholder="Email" autocomplete="email"><input id="i-pass" type="password" placeholder="Kata sandi (min. 6 karakter)" autocomplete="current-password"><div class="btns"><button class="btn blue" id="f-masuk">Masuk</button><button class="btn line" id="f-daftar">Daftar</button></div><p class="note" style="margin:.8rem 0 0">Email hanya untuk verifikasi dan tidak ditampilkan. Yang terlihat hanya nama tampilanmu.</p></div>
 <div id="b-verify" class="box" hidden><p>Kami mengirim email verifikasi. Klik tautan di email itu, lalu tekan tombol di bawah.</p><div class="btns"><button class="btn blue" id="f-cek">Saya sudah verifikasi</button><button class="btn line f-out">Keluar</button></div></div>
@@ -202,13 +225,9 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 <p id="lg-msg" class="note" role="status"></p><button class="btn blue" id="lg-go">Masuk</button><button class="btn line" id="lg-cancel">Batal</button></dialog>
 
 <script>
-(function(){var st=document.querySelector(".kstrip"),sl=[].slice.call(st.children),ct=document.getElementById("kcount"),lb=document.getElementById("klb"),li=document.getElementById("klb-img"),k=0;
-function idx(){return Math.round(st.scrollLeft/st.clientWidth)}
-function go(n){n=(n+sl.length)%sl.length;st.scrollTo({left:n*st.clientWidth,behavior:"smooth"})}
-var lastI=-1;st.addEventListener("scroll",function(){var n=idx();ct.textContent=(n+1)+" / "+sl.length;if(n!==lastI){lastI=n;document.dispatchEvent(new CustomEvent("kaos:slide",{detail:n}))}});
-document.querySelector(".kshow .kprev").onclick=function(){go(idx()-1)};document.querySelector(".kshow .knext").onclick=function(){go(idx()+1)};
-function show(n,d){for(var t=0;t<sl.length;t++){k=(n+sl.length)%sl.length;if(!sl[k].classList.contains("missing"))break;n=k+d}var im=sl[k].querySelector("img");li.src=im.src;li.alt=im.alt}
-sl.forEach(function(s,n){s.onclick=function(){if(s.classList.contains("missing"))return;show(n,1);lb.showModal()}});
+(function(){var cards=[].slice.call(document.querySelectorAll("#kaos .kimg")),lb=document.getElementById("klb"),li=document.getElementById("klb-img"),k=0;
+function show(n,d){for(var t=0;t<cards.length;t++){k=(n+cards.length)%cards.length;if(!cards[k].classList.contains("missing"))break;n=k+d}var im=cards[k].querySelector("img");li.src=im.src;li.alt=im.alt}
+cards.forEach(function(s,n){s.onclick=function(){if(s.classList.contains("missing"))return;show(n,1);lb.showModal()}});
 lb.querySelector(".kprev").onclick=function(){show(k-1,-1)};lb.querySelector(".knext").onclick=function(){show(k+1,1)};
 lb.querySelector(".lbx").onclick=function(){lb.close()};lb.onclick=function(e){if(e.target===lb)lb.close()};
 lb.onkeydown=function(e){if(e.key==="ArrowRight")show(k+1,1);if(e.key==="ArrowLeft")show(k-1,-1)};
@@ -220,25 +239,30 @@ const $=id=>document.getElementById(id),V="https://www.gstatic.com/firebasejs/10
 try{
 const {initializeApp,getApps,getApp}=await import(V+"firebase-app.js"),au=await import(V+"firebase-auth.js"),fs=await import(V+"firebase-firestore.js");
 const app=getApps().length?getApp():initializeApp(cfg),auth=au.getAuth(app),db=fs.getFirestore(app),ref=fs.doc(db,"captions","kaos");
-const F={t:$("k-t"),p:$("k-p"),d:$("k-d")},KS=["t","p","d","url"];
-// Setiap desain (1, 2, 3) punya judul, harga, deskripsi, dan link beli sendiri. Yang belum diisi mengikuti Desain 1.
-const DEF={t:F.t.textContent,p:F.p.textContent,d:F.d.textContent,url:""};
-let items=[{},{},{}],cur=0,editing=false,dirty=false,first=true;
-const res=(i,k)=>{const v=(items[i]||{})[k];if(v!=null&&v!=="")return v;const b=(items[0]||{})[k];return(b!=null&&b!=="")?b:DEF[k]};
-const showItem=()=>{for(const k in F)F[k].textContent=res(cur,k);const u=res(cur,"url");$("k-buy").href=ok(u)?u:"#"};
-const commit=()=>{if(!editing)return;for(const k in F){const v=F[k].textContent.trim();if(v!==String(res(cur,k)).trim()){items[cur][k]=v;dirty=true}}};
+// Katalog: 3 slot, masing-masing 1 gambar + 1 judul + 1 harga + 1 deskripsi + 1 link beli
+const cards=[0,1,2].map(i=>document.querySelector('.kcard[data-i="'+i+'"]'));
+const KS=["t","p","d","url"];
+const DEFS=[{t:"Kaos Logika Positif",p:"Rp 0",d:"Deskripsi kaos: bahan, ukuran, dan cerita di balik desainnya.",url:""},
+ {t:"Seri Berikutnya",p:"Segera hadir",d:"Desain seri kaos berikutnya segera hadir.",url:""},
+ {t:"Seri Berikutnya",p:"Segera hadir",d:"Desain seri kaos berikutnya segera hadir.",url:""}];
+let items=[{},{},{}],editing=false,dirty=false,first=true;
+const fld=(i,k)=>cards[i].querySelector('[data-f="'+k+'"]');
+const res=(i,k)=>{const v=(items[i]||{})[k];return(v!=null&&v!=="")?v:DEFS[i][k]};
+const showAll=()=>{cards.forEach((c,i)=>{for(const k of ["t","p","d"])fld(i,k).textContent=res(i,k);const u=res(i,"url"),b=c.querySelector(".kbuy");b.hidden=!ok(u);if(ok(u))b.href=u})};
+const commit=()=>{if(!editing)return;cards.forEach((c,i)=>{for(const k of ["t","p","d"]){const v=fld(i,k).textContent.trim();if(v!==String(res(i,k)).trim()){items[i][k]=v;dirty=true}}})};
 const fromDoc=v=>{const arr=Array.isArray(v.items)?v.items:[];return[0,1,2].map(i=>{const o=Object.assign({},arr[i]||{});if(i===0)for(const k of KS)if((o[k]==null||o[k]==="")&&v[k]!=null)o[k]=v[k];return o})};
-fs.onSnapshot(ref,s=>{if(editing)return;if(s.exists())items=fromDoc(s.data());showItem()});
-document.addEventListener("kaos:slide",e=>{commit();cur=Math.min(2,Math.max(0,e.detail|0));showItem();if(editing)$("k-st").textContent="Mengedit teks Desain "+(cur+1)+". Ketik lalu tekan Simpan."});
+showAll();
+fs.onSnapshot(ref,s=>{if(editing)return;if(s.exists())items=fromDoc(s.data());showAll()});
 const lk=$("lg-link");
 au.onAuthStateChanged(auth,u=>{$("k-admin").hidden=!(u&&u.uid===ADMIN_UID&&u.emailVerified);lk.textContent=u?"Keluar":"Masuk penulis";if(first){first=false;if(!u&&location.hash==="#masuk")$("lg").showModal()}});
 lk.onclick=e=>{e.preventDefault();if(auth.currentUser)au.signOut(auth);else{$("lg-msg").textContent="";$("lg").showModal()}};
 $("lg-go").onclick=async()=>{try{await au.signInWithEmailAndPassword(auth,$("lg-e").value.trim(),$("lg-p").value);$("lg").close()}catch(x){$("lg-msg").textContent="Gagal masuk: "+x.code}};
 $("lg-cancel").onclick=()=>$("lg").close();
-Object.values(F).forEach(n=>n.addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()}));
-const setEdit=on=>{if(!on)commit();editing=on;document.body.classList.toggle("kedit",on);Object.values(F).forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Mengedit teks Desain "+(cur+1)+". Geser ke desain lain untuk mengeditnya, lalu tekan Simpan.":""};
+const eds=()=>cards.flatMap((c,i)=>["t","p","d"].map(k=>fld(i,k)));
+eds().forEach(n=>n.addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()}));
+const setEdit=on=>{if(!on)commit();editing=on;document.body.classList.toggle("kedit",on);eds().forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Klik teks pada kaos mana pun, ketik, lalu tekan Simpan.":""};
 $("k-ed").onclick=()=>setEdit(!editing);
-$("k-url").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang untuk Desain "+(cur+1)+" (diawali https://), misalnya link WhatsApp atau toko:",res(cur,"url")||"");if(v===null)return;if(!ok(v.trim())){$("k-st").textContent="Link harus diawali https://";return}items[cur].url=v.trim();showItem();dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link Desain "+(cur+1)+" diubah, tekan Simpan."};
+cards.forEach((c,i)=>c.querySelector(".klinkbtn").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang untuk kaos "+(i+1)+" (diawali https://), misalnya link WhatsApp atau toko. Kosongkan untuk menyembunyikan tombol:",res(i,"url")||"");if(v===null)return;const t=v.trim();if(t&&!ok(t)){$("k-st").textContent="Link harus diawali https://";return}items[i].url=t;showAll();dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link kaos "+(i+1)+" diubah, tekan Simpan."});
 $("k-sv").onclick=async()=>{commit();try{await auth.currentUser.getIdToken(true);
 const clean=items.map(o=>{const r={};for(const k of KS){const v=(o[k]==null?"":String(o[k])).trim();if(v)r[k]=v}return r});
 await fs.setDoc(ref,{items:clean,t:res(0,"t"),p:res(0,"p"),d:res(0,"d"),url:res(0,"url"),updatedAt:fs.serverTimestamp()},{merge:true});
@@ -281,12 +305,22 @@ vis.forEach(t=>{const c=document.createElement("article"),h=document.createEleme
 h.textContent=t.title;s.textContent=fmt(ms(t));p.textContent=t.text.replace(/\[stiker:\d+\]/g,"").replace(/\s+/g," ").slice(0,160);c.append(h,s,p);
 c.onclick=()=>open(t.id);c.onkeydown=e=>{if(e.key==="Enter")open(t.id)};G.append(c)})}
 fs.onSnapshot(fs.collection(db,"topics"),s=>{topics=s.docs.filter(d=>d.id!=="current").map(d=>({id:d.id,...d.data({serverTimestamps:"estimate"})})).sort((a,b)=>ms(b)-ms(a));grid();const m=location.hash.match(/^#t=(.+)$/);if(m&&!cur&&topics.some(t=>t.id===m[1]))open(m[1])},e=>{G.innerHTML='<p class="note">Curhatan belum bisa dimuat ('+e.code+').</p>'});
+const GONE="Komentar ini telah dihapus oleh penulis.";
+const upd=(d,data)=>fs.updateDoc(d.ref,data).catch(x=>msg("Gagal: "+(x.code||x.message)));
 function drawC(){const l=$("list");l.textContent="";if(!cms.length){l.textContent="Belum ada komentar. Jadilah yang pertama.";return}
-cms.forEach(d=>{const c=d.data(),e=document.createElement("div"),b=document.createElement("b"),p=document.createElement("p");e.className="cm";b.textContent=c.name;
+cms.forEach(d=>{const c=d.data(),e=document.createElement("div"),b=document.createElement("b"),p=document.createElement("p");e.className="cm";
+const btn=(txt,fn)=>{const x=document.createElement("button");x.className="btn line";x.textContent=txt;x.style.cssText="padding:.25rem .7rem;font-size:.82rem;margin:.4rem .4rem 0 0";x.onclick=fn;return x};
+if(c.mod==="removed"){p.className="gonep";p.textContent=GONE;e.append(p);if(admin)e.append(btn("Hapus permanen",()=>{if(confirm("Hapus permanen komentar ini dari database?"))fs.deleteDoc(d.ref)}));l.append(e);return}
+b.textContent=c.name;
 if(c.uid===ADMIN_UID){const g=document.createElement("span");g.className="badge";g.textContent="Penulis";b.append(" ",g)}
-rich(p,c.text);e.append(b,p);
-if(admin){const x=document.createElement("button");x.className="btn line";x.textContent="Hapus";x.style.cssText="padding:.25rem .7rem;font-size:.82rem;margin-top:.4rem";x.onclick=()=>{if(confirm("Hapus komentar ini?"))fs.deleteDoc(d.ref)};e.append(x)}l.append(e)})}
-function open(id){const t=topics.find(x=>x.id===id);if(!t)return;cur=t;$("tp-t").textContent=t.kind==="tweet"?"Kicauan Diaz Hardika":t.title;$("tp-d").textContent=fmt(ms(t));rich($("tp-b"),t.text);
+const hid=c.mod==="blur";
+if(hid&&!admin){p.className="blurp";p.setAttribute("aria-hidden","true");p.textContent="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt."}else rich(p,c.text);
+if(hid&&admin)p.classList.add("hid");
+e.append(b,p);
+if(hid){const n=document.createElement("small");n.className="modl";n.textContent=admin?"Disembunyikan dari pengunjung (blur).":"Komentar disembunyikan oleh penulis.";e.append(n)}
+if(admin){e.append(btn(hid?"Tampilkan":"Sembunyikan",()=>upd(d,{mod:hid?fs.deleteField():"blur",modAt:fs.serverTimestamp()})),btn("Hapus",()=>{if(confirm("Hapus komentar ini? Isinya akan dihapus dan diganti tulisan \"Komentar ini telah dihapus oleh penulis.\""))upd(d,{mod:"removed",text:"",modAt:fs.serverTimestamp()})}))}
+l.append(e)})}
+function open(id){const t=topics.find(x=>x.id===id);if(!t)return;cur=t;closeEdit();$("tp-t").textContent=t.kind==="tweet"?"Kicauan Diaz Hardika":t.title;$("tp-d").textContent=fmt(ms(t));rich($("tp-b"),t.text);
 const u=location.origin+location.pathname+"#t="+id,e=encodeURIComponent;
 $("s-wa").href="https://wa.me/?text="+e(t.title+" "+u);$("s-fb").href="https://www.facebook.com/sharer/sharer.php?u="+e(u);$("s-x").href="https://twitter.com/intent/tweet?text="+e(t.title)+"&url="+e(u);
 $("s-cp").onclick=async()=>{try{await navigator.clipboard.writeText(u);$("s-cp").textContent="Tersalin"}catch(x){prompt("Salin tautan:",u)}};$("s-cp").textContent="Salin tautan";
@@ -304,9 +338,14 @@ $("f-masuk").onclick=async()=>{try{await au.signInWithEmailAndPassword(auth,...c
 $("f-cek").onclick=async()=>{await auth.currentUser.reload();await auth.currentUser.getIdToken(true);location.reload()};
 document.querySelectorAll(".f-out").forEach(b=>b.onclick=()=>au.signOut(auth));
 $("f-kirim").onclick=async()=>{const t=$("i-teks").value.trim(),u=auth.currentUser;if(!t||!cur)return;if(t.length>1000)return msg("Komentar terlalu panjang (maks. 1000 karakter).");try{await u.getIdToken(true);await fs.addDoc(fs.collection(db,"comments"),{uid:u.uid,name:u.displayName,text:t,topicId:cur.id,createdAt:fs.serverTimestamp()});$("i-teks").value="";msg("")}catch(x){msg("Gagal kirim: "+(x.code||x.message))}};
-picker($("i-teks"));picker($("n-b"));
+picker($("i-teks"));picker($("n-b"));picker($("te-b"));
 $("new").onclick=()=>{$("n-m").textContent="";$("nw").showModal()};
 $("n-go").onclick=async()=>{const t=$("n-t").value.trim(),b=$("n-b").value.trim();if(!t||!b){$("n-m").textContent="Judul dan isi wajib diisi.";return}try{await auth.currentUser.getIdToken(true);await fs.addDoc(fs.collection(db,"topics"),{title:t,text:b,createdAt:fs.serverTimestamp()});$("n-t").value=$("n-b").value="";$("nw").close()}catch(x){$("n-m").textContent="Gagal terbitkan: "+(x.code||x.message)}};
+function closeEdit(){$("te-box").hidden=true;$("tp-t").hidden=false;$("tp-b").hidden=false;$("tp-edit").hidden=false}
+$("tp-edit").onclick=()=>{if(!cur)return;const tw=cur.kind==="tweet";$("te-t").hidden=tw;$("te-t").value=cur.title||"";$("te-b").value=cur.text||"";$("te-m").textContent="";$("te-box").hidden=false;$("tp-t").hidden=true;$("tp-b").hidden=true;$("tp-edit").hidden=true};
+$("te-x").onclick=closeEdit;
+$("te-go").onclick=async()=>{const t=$("te-t").value.trim(),b=$("te-b").value.trim(),tw=cur&&cur.kind==="tweet";if(!cur)return;if(!b||(!tw&&!t)){$("te-m").textContent="Judul dan isi wajib diisi.";return}
+try{await auth.currentUser.getIdToken(true);const data={text:b,updatedAt:fs.serverTimestamp()};if(!tw)data.title=t;await fs.updateDoc(fs.doc(db,"topics",cur.id),data);cur.text=b;if(!tw)cur.title=t;rich($("tp-b"),b);$("tp-t").textContent=tw?"Kicauan Diaz Hardika":t;closeEdit()}catch(x){$("te-m").textContent="Gagal simpan: "+(x.code||x.message)}};
 $("tp-del").onclick=async()=>{if(cur&&confirm("Hapus curhatan ini? Komentarnya tidak ikut tampil lagi.")){try{await fs.deleteDoc(fs.doc(db,"topics",cur.id));$("tp").close()}catch(x){msg("Gagal hapus: "+x.code)}}};
 }catch(e){console.error(e);G.innerHTML='<p class="note">Curhatan belum bisa dimuat.</p>'}
 </script>

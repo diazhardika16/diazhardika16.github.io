@@ -169,6 +169,10 @@ dialog#lbo{width:100%;height:100%;max-width:none;max-height:none;border:0;paddin
 dialog#lbo[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem}
 #lbo-img{max-width:94vw;max-height:80vh;object-fit:contain}
 #lbo-cap{margin:0;max-width:60ch;text-align:center;color:#d8cccc;font-size:.95rem;padding:0 1rem}
+.gonep{font-style:italic;color:var(--muted);margin:.2em 0 0}
+.blurp{filter:blur(6px);user-select:none;pointer-events:none;margin:.2em 0 .3rem}
+.modl{font-size:.82rem;color:var(--muted)}
+.hid{border:1px dashed var(--line);border-radius:8px;padding:.4rem .6rem;opacity:.75}
 </style><script src="lang.js" defer></script><meta name="google-adsense-account" content="ca-pub-8505911296307431">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8505911296307431"
      crossorigin="anonymous"></script>
@@ -745,13 +749,23 @@ function openReply(d,e){if(!me||!me.emailVerified){msg("Masuk dan verifikasi ema
 closeReply();const f=document.createElement("div"),t=document.createElement("textarea");f.className="cmrf";t.rows=2;t.maxLength=1000;t.placeholder="Tulis balasanmu...";
 const row=document.createElement("div");row.className="cmbtns";row.append(mkb("Kirim balasan",async()=>{if(await send(t.value,d.id))closeReply()}),mkb("Batal",closeReply,"btn alt btn-sm"));
 f.append(t,row);picker(t);e.append(f);rform=f;t.focus()}
-function node(d,reply){const c=d.data(),e=document.createElement("div"),b=document.createElement("b"),m=document.createElement("small"),p=document.createElement("p"),a=document.createElement("div");
-e.className="cmi"+(reply?" cmr":"");b.textContent=c.name||"";
+const GONE="Komentar ini telah dihapus oleh penulis.";
+const upd=(d,data)=>fs.updateDoc(d.ref,data).catch(x=>msg("Gagal: "+(x.code||x.message)));
+const soft=d=>{if(confirm("Hapus komentar ini? Isinya akan dihapus dan diganti tulisan \"Komentar ini telah dihapus oleh penulis.\""))upd(d,{mod:"removed",text:"",modAt:fs.serverTimestamp()})};
+function node(d,reply){const c=d.data(),e=document.createElement("div");e.className="cmi"+(reply?" cmr":"");
+const mkp=(cls,txt)=>{const x=document.createElement("p");x.className=cls;x.textContent=txt;return x};
+if(c.mod==="removed"){e.append(mkp("gonep",GONE));if(admin){const a=document.createElement("div");a.className="cmact";a.append(mkb("Hapus permanen",()=>del(d),""));e.append(a)}return e}
+const b=document.createElement("b"),m=document.createElement("small"),p=document.createElement("p"),a=document.createElement("div");
+b.textContent=c.name||"";
 if(c.uid===ADMIN_UID){const g=document.createElement("span");g.className="cmbadge";g.textContent="Penulis";b.append(" ",g)}
-m.textContent=fmt(ms(d));rich(p,c.text);a.className="cmact";
+m.textContent=fmt(ms(d));
+const hid=c.mod==="blur";
+if(hid&&!admin){p.className="blurp";p.setAttribute("aria-hidden","true");p.textContent="Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt."}else rich(p,c.text);
+if(hid&&admin)p.classList.add("hid");
+a.className="cmact";
 if(!reply)a.append(mkb("Balas",()=>openReply(d,e),""));
-if(admin)a.append(mkb("Hapus",()=>del(d),""));
-e.append(b,m,p,a);return e}
+if(admin){a.append(mkb(hid?"Tampilkan":"Sembunyikan",()=>upd(d,{mod:hid?fs.deleteField():"blur",modAt:fs.serverTimestamp()}),""),mkb("Hapus",()=>soft(d),""))}
+e.append(b,m,p);if(hid)e.append(mkp("modl",admin?"Disembunyikan dari pengunjung (blur).":"Komentar disembunyikan oleh penulis."));e.append(a);return e}
 function draw(){if(rform&&rform.querySelector("textarea").value.trim()){dirty=true;return}
 const L=$("cm-list");L.textContent="";rform=null;
 const tops=docs.filter(d=>!d.data().parentId).sort((a,b)=>ms(b)-ms(a)),kids={};
