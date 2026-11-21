@@ -29,7 +29,12 @@ p{margin:0 0 1em}.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}.c{text-
 .book .eyebrow{color:var(--muted)}.book h2{font-size:clamp(2.2rem,5vw,3.2rem);margin-bottom:.1em}.st{font-family:"Playfair Display",Georgia,serif;font-size:1.25rem}
 .chk{list-style:none;padding:0;margin:0 0 1.2rem}.chk li{padding-left:1.8rem;position:relative;margin:.3rem 0}.chk li::before{content:"\2713";position:absolute;left:0;color:#fff;background:var(--blue);width:1.15rem;height:1.15rem;border-radius:4px;font-size:.78rem;display:grid;place-items:center;top:.28rem}
 .cov{text-align:center}.cov img{max-width:300px;width:100%;height:auto;border-radius:4px 10px 10px 4px;box-shadow:0 22px 40px #0004}
-.stores{display:flex;flex-wrap:wrap;gap:.6rem}.store{display:inline-flex;align-items:center;min-height:50px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.4rem .9rem}.store img{height:36px;width:auto;display:block}
+.stores{display:grid;grid-template-columns:repeat(3,minmax(160px,220px));gap:1rem;justify-content:start}
+@media(max-width:600px){.stores{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}}
+.store{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;min-height:112px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.25rem;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+.store:hover{border-color:var(--blue);box-shadow:0 8px 20px #0001;transform:translateY(-2px)}
+.store img{height:52px;max-width:100%;width:auto;object-fit:contain;display:block}
+.store span{font-size:.92rem;font-weight:600;color:var(--ink);line-height:1.2;text-align:center}
 .avail{margin:1.2rem 0 .5rem;font-weight:600;font-size:.92rem}
 .disk{display:grid;gap:1.2rem}@media(min-width:800px){.disk{grid-template-columns:1fr 1fr}}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.6rem}.card h3{font-size:1.4rem}
@@ -165,10 +170,10 @@ blockquote.fq{margin:.8em 0;padding:.4em 1em;border-left:3px solid var(--blue);c
 <div class="feat"><div><i>&#9203;</i>Bukan motivasi instan</div><div><i>&#129517;</i>Pendekatan rasional</div><div><i>&#128221;</i>Contoh nyata dalam kehidupan</div><div><i>&#127793;</i>Cocok untuk semua fase hidup</div></div>
 <h3 id="beli" style="margin-top:2.5rem;font-size:1.3rem">Dapatkan di:</h3>
 <div class="stores">
-<a class="store" href="https://www.tokopedia.com/bukunesia/bukunesia-logika-positif-trigger-diri-untuk-berpikir-lebih-positif-1734410082475148664" target="_blank" rel="noopener" aria-label="Beli di Tokopedia"><img src="logo-tokopedia.png" alt="Tokopedia"></a>
-<a class="store" href="https://shopee.co.id/Bukunesia-Logika-Positif-Trigger-Diri-untuk-Berpikir-Lebih-Positif-i.717921939.43278788519" target="_blank" rel="noopener" aria-label="Beli di Shopee"><img src="logo-shopee.png" alt="Shopee"></a>
-<a class="store" href="https://bukunesiastore.com/shop/buku-logika-positif-trigger-diri-untuk-berpikir-lebih-positif" target="_blank" rel="noopener" aria-label="Beli di Bukunesia"><img src="logo-bukunesia.png" alt="Bukunesia"></a></div>
-</div></section>
+<a class="store" href="https://www.tokopedia.com/bukunesia/bukunesia-logika-positif-trigger-diri-untuk-berpikir-lebih-positif-1734410082475148664" target="_blank" rel="noopener" aria-label="Beli di Tokopedia"><img src="logo-tokopedia.png" alt="Tokopedia"><span>Tokopedia</span></a>
+<a class="store" href="https://shopee.co.id/Bukunesia-Logika-Positif-Trigger-Diri-untuk-Berpikir-Lebih-Positif-i.717921939.43278788519" target="_blank" rel="noopener" aria-label="Beli di Shopee"><img src="logo-shopee.png" alt="Shopee"><span>Shopee</span></a>
+<a class="store" href="https://bukunesiastore.com/shop/buku-logika-positif-trigger-diri-untuk-berpikir-lebih-positif" target="_blank" rel="noopener" aria-label="Beli di Bukunesia Store"><img src="logo-bukunesia.png" alt="Bukunesia Store"><span>Bukunesia Store</span></a>
+</div>
 
 <section id="dukung" class="sec"><div class="wrap"><h2>Dukung karya ini</h2>
 <div class="card" style="margin-bottom:2rem"><h3>Donasi</h3><p>Setiap donasi membantu saya menulis buku berikutnya dan merawat website ini. Berapa pun jumlahnya, saya berterima kasih.</p><a class="btn blue" href="https://saweria.co/logikapositif" target="_blank" rel="noopener">Kirim donasi</a></div>
