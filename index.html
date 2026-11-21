@@ -90,13 +90,24 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 .ev h4{margin:0 0 .2rem;font:700 1.1rem Inter,system-ui,sans-serif}.ev .pl{color:var(--muted);font-size:.92rem}.ev p{margin:.3rem 0 .5rem}.ev .btn{padding:.4rem .9rem;font-size:.85rem;margin:0}
 .sub2{margin:2rem 0 .8rem;font-size:1.2rem}
 #hv-list{max-width:760px;margin:0 auto}
+.kcat{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.5rem;align-items:start}
+@media(max-width:900px){.kcat{grid-template-columns:1fr 1fr}}@media(max-width:600px){.kcat{grid-template-columns:1fr}}
+.kcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.kimg{position:relative;display:block;width:100%;aspect-ratio:1/1;padding:0;border:0;background:#fff;cursor:zoom-in}.kimg.missing{cursor:default}
+.kimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.kimg .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.9rem;padding:1rem;text-align:center}
+.kbody{padding:1.1rem 1.2rem 1.4rem;display:flex;flex-direction:column;gap:.45rem}
+.kt{margin:0;font-size:1.2rem;line-height:1.3}.kprice{margin:0;font-weight:700;font-size:1.4rem;color:var(--blue)}.kd{margin:0;font-size:.97rem}
+.kact{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}.kact .btn{margin:0}
+.klinkbtn{display:none}body.kedit .klinkbtn{display:inline-block}
+.ks{background:linear-gradient(135deg,#0c1626,#1c2f57)}.ks .eyebrow{color:#8fb0ff}
 </style><script src="lang.js" defer></script><meta name="google-adsense-account" content="ca-pub-8505911296307431">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8505911296307431"
      crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="hd"><div class="wrap hdw"><a class="logo" href="index.html">DIAZ HARDIKA</a>
-<nav aria-label="Menu utama"><a href="index.html" aria-current="page">Beranda</a><a href="logika-positif.html">Logika Positif</a><a href="endless-war.html">Endless War</a><a href="#tentang">Tentang</a></nav></div></header>
+<nav aria-label="Menu utama"><a href="index.html" aria-current="page">Beranda</a><a href="logika-positif.html">Logika Positif</a><a href="endless-war.html">Endless War</a><a href="kesatria.html">Kesatria</a><a href="#tentang">Tentang</a></nav></div></header>
 <main>
 <section class="media hero"><img class="bg" src="hero.jpg" alt="" onerror="this.remove()"><div class="wrap">
 <p class="eyebrow">Writing &middot; Books &middot; Worlds &middot; Music</p>
@@ -124,14 +135,25 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 <article class="card"><h3>Topik Terbaru</h3><ul id="tops" class="tops"><li class="note">Memuat topik...</li></ul></article></div></div></section>
 
 <section id="katalog" class="sec alt"><div class="wrap"><h2 class="c">Log Pose</h2><p class="sub">Kaos dengan desain dari dunia karya saya dan teman-teman saya.</p>
-<div class="kaos" id="kaos">
-<div class="kshow" aria-label="Galeri desain kaos"><div class="kstrip" tabindex="0"><figure class="kslide"><span class="ph">Desain kaos 1 segera hadir</span><img src="kaos-1.jpg" alt="Desain kaos Logika Positif 1" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure><figure class="kslide"><span class="ph">Desain kaos 2 segera hadir</span><img src="kaos-2.jpg" alt="Desain kaos Logika Positif 2" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure><figure class="kslide"><span class="ph">Desain kaos 3 segera hadir</span><img src="kaos-3.jpg" alt="Desain kaos Logika Positif 3" onerror="this.style.display='none';this.closest('.kslide').classList.add('missing')"></figure></div>
-<button class="knav kprev" aria-label="Gambar sebelumnya">&#8249;</button><button class="knav knext" aria-label="Gambar berikutnya">&#8250;</button><span class="kcount" id="kcount">1 / 3</span></div>
-<div class="kinfo"><h3 class="t" id="k-t">Kaos Logika Positif</h3><p class="p" id="k-p">Rp 0</p>
-<p class="d" id="k-d">Deskripsi kaos: bahan, ukuran, dan cerita di balik desainnya.</p>
-<a class="btn blue" id="k-buy" href="#" target="_blank" rel="noopener">Beli sekarang</a>
-<div id="k-admin" class="kadmin" hidden><button class="btn line" id="k-ed">&#9998; Edit teks</button><button class="btn line" id="k-url">Ubah link beli</button><button class="btn blue" id="k-sv" hidden>Simpan</button><span id="k-st" class="note" role="status"></span></div>
-<p class="mlink"><a href="#" id="lg-link">Masuk penulis</a></p></div></div>
+<div class="kcat" id="kaos">
+<article class="kcard" data-i="0">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 1"><span class="ph">Foto kaos 1 segera hadir</span><img src="kaos-1.jpg" alt="Kaos Log Pose 1" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+<article class="kcard" data-i="1">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 2"><span class="ph">Foto kaos 2 segera hadir</span><img src="kaos-2.jpg" alt="Kaos Log Pose 2" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+<article class="kcard" data-i="2">
+<button class="kimg" type="button" aria-label="Perbesar gambar kaos 3"><span class="ph">Foto kaos 3 segera hadir</span><img src="kaos-3.jpg" alt="Kaos Log Pose 3" loading="lazy" onerror="this.style.display='none';this.closest('.kimg').classList.add('missing')"></button>
+<div class="kbody"><h3 class="kt" data-f="t" translate="no">Kaos</h3><p class="kprice" data-f="p" translate="no">Rp 0</p><p class="kd" data-f="d" translate="no">Deskripsi</p>
+<div class="kact"><a class="btn blue kbuy" href="#" target="_blank" rel="noopener" hidden>Beli sekarang</a><button class="btn line klinkbtn" type="button">Ubah link beli</button></div></div>
+</article>
+</div>
+<div id="k-admin" class="kadmin" hidden><button class="btn line" id="k-ed" type="button">&#9998; Edit teks</button><button class="btn blue" id="k-sv" type="button" hidden>Simpan</button><span id="k-st" class="note" role="status"></span></div>
+<p class="mlink"><a href="#" id="lg-link">Masuk penulis</a></p>
 </div></section>
 
 <section id="jadwal" class="sec"><div class="wrap"><h2 class="c">Jadwal Pembicara &amp; Event</h2>
@@ -147,10 +169,15 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 <div class="tiles"><a href="endless-war.html#dunia"><b>Dunia</b><span>Latar, ras, dan sejarah.</span></a><a href="endless-war.html#karakter"><b>Karakter</b><span>Tokoh-tokoh utama dan pendukung.</span></a><a href="endless-war.html"><b>Magic System</b><span>Sistem kekuatan dan aturan dunia.</span></a><a href="endless-war.html#proses"><b>Proses Pengembangan</b><span>Catatan perkembangan dan rancangan cerita.</span></a></div>
 </div></section>
 
+<section class="media band ks"><div class="wrap">
+<p class="eyebrow">Proyek Fiksi</p><h2>Kesatria Penjaga Dunia Astral</h2>
+<p>Dunia astral, para kesatria yang menjaganya, dan kisah di balik setiap pertempuran.</p>
+<a class="btn ghost" href="kesatria.html">Jelajahi Dunia Astral &rarr;</a></div></section>
+
 <section id="kitab-suci" class="media band kt"><img class="bg" src="kitab.jpg" alt="" onerror="this.remove()"><div class="wrap">
 <p class="eyebrow">Tulisan &amp; Refleksi</p><h2>Kekayaan Kitab Suci</h2>
 <p>Tulisan, refleksi, dan pemahaman yang lebih dalam mengenai kehidupan dan spiritualitas.</p>
-<a class="btn off" href="#kitab-suci" aria-disabled="true">Segera hadir</a></div></section>
+<a class="btn ghost" href="kitab-suci.html">Baca Tulisan &rarr;</a></div></section>
 
 
 <section id="tentang" class="sec"><div class="wrap about"><div>
@@ -163,7 +190,7 @@ dialog.box textarea{width:100%;font:inherit;border:1px solid var(--line);border-
 </main>
 <footer><div class="wrap"><div class="fg">
 <div><a class="logo" href="index.html">DIAZ HARDIKA</a><br>Writing &middot; Books &middot; Worlds &middot; Music</div>
-<div><h4>Proyek</h4><ul><li><a href="logika-positif.html">Logika Positif</a></li><li><a href="endless-war.html">Endless War</a></li><li><a href="#kitab-suci">Kekayaan Kitab Suci</a></li></ul></div>
+<div><h4>Proyek</h4><ul><li><a href="logika-positif.html">Logika Positif</a></li><li><a href="endless-war.html">Endless War</a></li><li><a href="kesatria.html">Kesatria Penjaga Dunia Astral</a></li><li><a href="kitab-suci.html">Kekayaan Kitab Suci</a></li></ul></div>
 <div><h4>Navigasi</h4><ul><li><a href="index.html">Beranda</a></li><li><a href="logika-positif.html#curhatan">Curhatan Kita</a></li><li><a href="#tentang">Tentang</a></li><li><a href="cv.html">CV &amp; Jadwal</a></li><li><a href="logika-positif.html#privasi">Catatan privasi</a></li></ul></div>
 </div><p class="note" style="margin:0">&copy; 2026 Diaz Hardika. Semua hak cipta dilindungi.</p></div></footer>
 
@@ -183,13 +210,9 @@ t.forEach(function(x){x.onclick=function(){t.forEach(function(y){y.classList.rem
 })();
 </script>
 <script>
-(function(){var st=document.querySelector(".kstrip"),sl=[].slice.call(st.children),ct=document.getElementById("kcount"),lb=document.getElementById("klb"),li=document.getElementById("klb-img"),k=0;
-function idx(){return Math.round(st.scrollLeft/st.clientWidth)}
-function go(n){n=(n+sl.length)%sl.length;st.scrollTo({left:n*st.clientWidth,behavior:"smooth"})}
-var lastI=-1;st.addEventListener("scroll",function(){var n=idx();ct.textContent=(n+1)+" / "+sl.length;if(n!==lastI){lastI=n;document.dispatchEvent(new CustomEvent("kaos:slide",{detail:n}))}});
-document.querySelector(".kshow .kprev").onclick=function(){go(idx()-1)};document.querySelector(".kshow .knext").onclick=function(){go(idx()+1)};
-function show(n,d){for(var t=0;t<sl.length;t++){k=(n+sl.length)%sl.length;if(!sl[k].classList.contains("missing"))break;n=k+d}var im=sl[k].querySelector("img");li.src=im.src;li.alt=im.alt}
-sl.forEach(function(s,n){s.onclick=function(){if(s.classList.contains("missing"))return;show(n,1);lb.showModal()}});
+(function(){var cards=[].slice.call(document.querySelectorAll("#kaos .kimg")),lb=document.getElementById("klb"),li=document.getElementById("klb-img"),k=0;
+function show(n,d){for(var t=0;t<cards.length;t++){k=(n+cards.length)%cards.length;if(!cards[k].classList.contains("missing"))break;n=k+d}var im=cards[k].querySelector("img");li.src=im.src;li.alt=im.alt}
+cards.forEach(function(s,n){s.onclick=function(){if(s.classList.contains("missing"))return;show(n,1);lb.showModal()}});
 lb.querySelector(".kprev").onclick=function(){show(k-1,-1)};lb.querySelector(".knext").onclick=function(){show(k+1,1)};
 lb.querySelector(".lbx").onclick=function(){lb.close()};lb.onclick=function(e){if(e.target===lb)lb.close()};
 lb.onkeydown=function(e){if(e.key==="ArrowRight")show(k+1,1);if(e.key==="ArrowLeft")show(k-1,-1)};
@@ -201,25 +224,30 @@ const $=id=>document.getElementById(id),V="https://www.gstatic.com/firebasejs/10
 try{
 const {initializeApp,getApps,getApp}=await import(V+"firebase-app.js"),au=await import(V+"firebase-auth.js"),fs=await import(V+"firebase-firestore.js");
 const app=getApps().length?getApp():initializeApp(cfg),auth=au.getAuth(app),db=fs.getFirestore(app),ref=fs.doc(db,"captions","kaos");
-const F={t:$("k-t"),p:$("k-p"),d:$("k-d")},KS=["t","p","d","url"];
-// Setiap desain (1, 2, 3) punya judul, harga, deskripsi, dan link beli sendiri. Yang belum diisi mengikuti Desain 1.
-const DEF={t:F.t.textContent,p:F.p.textContent,d:F.d.textContent,url:""};
-let items=[{},{},{}],cur=0,editing=false,dirty=false,first=true;
-const res=(i,k)=>{const v=(items[i]||{})[k];if(v!=null&&v!=="")return v;const b=(items[0]||{})[k];return(b!=null&&b!=="")?b:DEF[k]};
-const showItem=()=>{for(const k in F)F[k].textContent=res(cur,k);const u=res(cur,"url");$("k-buy").href=ok(u)?u:"#"};
-const commit=()=>{if(!editing)return;for(const k in F){const v=F[k].textContent.trim();if(v!==String(res(cur,k)).trim()){items[cur][k]=v;dirty=true}}};
+// Katalog: 3 slot, masing-masing 1 gambar + 1 judul + 1 harga + 1 deskripsi + 1 link beli
+const cards=[0,1,2].map(i=>document.querySelector('.kcard[data-i="'+i+'"]'));
+const KS=["t","p","d","url"];
+const DEFS=[{t:"Kaos Logika Positif",p:"Rp 0",d:"Deskripsi kaos: bahan, ukuran, dan cerita di balik desainnya.",url:""},
+ {t:"Seri Berikutnya",p:"Segera hadir",d:"Desain seri kaos berikutnya segera hadir.",url:""},
+ {t:"Seri Berikutnya",p:"Segera hadir",d:"Desain seri kaos berikutnya segera hadir.",url:""}];
+let items=[{},{},{}],editing=false,dirty=false,first=true;
+const fld=(i,k)=>cards[i].querySelector('[data-f="'+k+'"]');
+const res=(i,k)=>{const v=(items[i]||{})[k];return(v!=null&&v!=="")?v:DEFS[i][k]};
+const showAll=()=>{cards.forEach((c,i)=>{for(const k of ["t","p","d"])fld(i,k).textContent=res(i,k);const u=res(i,"url"),b=c.querySelector(".kbuy");b.hidden=!ok(u);if(ok(u))b.href=u})};
+const commit=()=>{if(!editing)return;cards.forEach((c,i)=>{for(const k of ["t","p","d"]){const v=fld(i,k).textContent.trim();if(v!==String(res(i,k)).trim()){items[i][k]=v;dirty=true}}})};
 const fromDoc=v=>{const arr=Array.isArray(v.items)?v.items:[];return[0,1,2].map(i=>{const o=Object.assign({},arr[i]||{});if(i===0)for(const k of KS)if((o[k]==null||o[k]==="")&&v[k]!=null)o[k]=v[k];return o})};
-fs.onSnapshot(ref,s=>{if(editing)return;if(s.exists())items=fromDoc(s.data());showItem()});
-document.addEventListener("kaos:slide",e=>{commit();cur=Math.min(2,Math.max(0,e.detail|0));showItem();if(editing)$("k-st").textContent="Mengedit teks Desain "+(cur+1)+". Ketik lalu tekan Simpan."});
+showAll();
+fs.onSnapshot(ref,s=>{if(editing)return;if(s.exists())items=fromDoc(s.data());showAll()});
 const lk=$("lg-link");
 au.onAuthStateChanged(auth,u=>{$("k-admin").hidden=!(u&&u.uid===ADMIN_UID&&u.emailVerified);lk.textContent=u?"Keluar":"Masuk penulis";if(first){first=false;if(!u&&location.hash==="#masuk")$("lg").showModal()}});
 lk.onclick=e=>{e.preventDefault();if(auth.currentUser)au.signOut(auth);else{$("lg-msg").textContent="";$("lg").showModal()}};
 $("lg-go").onclick=async()=>{try{await au.signInWithEmailAndPassword(auth,$("lg-e").value.trim(),$("lg-p").value);$("lg").close()}catch(x){$("lg-msg").textContent="Gagal masuk: "+x.code}};
 $("lg-cancel").onclick=()=>$("lg").close();
-Object.values(F).forEach(n=>n.addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()}));
-const setEdit=on=>{if(!on)commit();editing=on;document.body.classList.toggle("kedit",on);Object.values(F).forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Mengedit teks Desain "+(cur+1)+". Geser ke desain lain untuk mengeditnya, lalu tekan Simpan.":""};
+const eds=()=>cards.flatMap((c,i)=>["t","p","d"].map(k=>fld(i,k)));
+eds().forEach(n=>n.addEventListener("keydown",e=>{if(e.key==="Enter")e.preventDefault()}));
+const setEdit=on=>{if(!on)commit();editing=on;document.body.classList.toggle("kedit",on);eds().forEach(n=>n.contentEditable=on?"true":"false");$("k-ed").innerHTML=on?"Selesai":"&#9998; Edit teks";$("k-sv").hidden=!on&&!dirty;$("k-st").textContent=on?"Klik teks pada kaos mana pun, ketik, lalu tekan Simpan.":""};
 $("k-ed").onclick=()=>setEdit(!editing);
-$("k-url").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang untuk Desain "+(cur+1)+" (diawali https://), misalnya link WhatsApp atau toko:",res(cur,"url")||"");if(v===null)return;if(!ok(v.trim())){$("k-st").textContent="Link harus diawali https://";return}items[cur].url=v.trim();showItem();dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link Desain "+(cur+1)+" diubah, tekan Simpan."};
+cards.forEach((c,i)=>c.querySelector(".klinkbtn").onclick=()=>{const v=prompt("Tempel link tombol Beli sekarang untuk kaos "+(i+1)+" (diawali https://), misalnya link WhatsApp atau toko. Kosongkan untuk menyembunyikan tombol:",res(i,"url")||"");if(v===null)return;const t=v.trim();if(t&&!ok(t)){$("k-st").textContent="Link harus diawali https://";return}items[i].url=t;showAll();dirty=true;$("k-sv").hidden=false;$("k-st").textContent="Link kaos "+(i+1)+" diubah, tekan Simpan."});
 $("k-sv").onclick=async()=>{commit();try{await auth.currentUser.getIdToken(true);
 const clean=items.map(o=>{const r={};for(const k of KS){const v=(o[k]==null?"":String(o[k])).trim();if(v)r[k]=v}return r});
 await fs.setDoc(ref,{items:clean,t:res(0,"t"),p:res(0,"p"),d:res(0,"d"),url:res(0,"url"),updatedAt:fs.serverTimestamp()},{merge:true});
