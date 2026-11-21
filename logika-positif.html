@@ -142,6 +142,11 @@ blockquote.fq{margin:.8em 0;padding:.4em 1em;border-left:3px solid var(--blue);c
 .fbar button{min-width:2rem;height:2rem;padding:0 .55rem;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:6px;font:600 .85rem Inter,system-ui,sans-serif;cursor:pointer}
 .fbar .sw{width:1.5rem;min-width:0;height:1.5rem;padding:0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
 .fprev{border:1px dashed var(--line);border-radius:8px;padding:.7rem .9rem;margin:0 0 .7rem;background:#fff}
+.fnref{font:700 .7em Inter,system-ui,sans-serif;vertical-align:super;color:var(--blue);text-decoration:none;margin:0 .1em;cursor:pointer}
+.fns{border-top:1px solid var(--line);margin-top:1.6rem;padding-top:.8rem;font:400 .9rem/1.6 Inter,system-ui,sans-serif;color:var(--muted);white-space:normal}
+.fns h4{margin:0 0 .4rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink)}
+.fns ol{margin:0;padding-left:1.3rem}.fns li{margin:.3rem 0}.fns a{color:var(--blue);text-decoration:none}
+.fbar+small{display:block;margin:-.2rem 0 .5rem}
 </style><script src="lang.js" defer></script><meta name="google-adsense-account" content="ca-pub-8505911296307431">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8505911296307431"
      crossorigin="anonymous"></script>
@@ -299,13 +304,20 @@ const rich=(el,text)=>{el.textContent="";String(text).split(/(\[stiker:\d{1,2}\]
 // ===== Format tulisan curhatan: tebal, miring, warna, dll. Disimpan sebagai kode seperti [b]teks[/b] dan ditampilkan lewat DOM (aman) =====
 const TG={b:["strong",""],i:["em",""],u:["u",""],s:["s",""],merah:["span","c-merah"],biru:["span","c-biru"],hijau:["span","c-hijau"],oranye:["span","c-oranye"],ungu:["span","c-ungu"],abu:["span","c-abu"],besar:["span","f-besar"],kecil:["span","f-kecil"],kutipan:["blockquote","fq"],judul:["span","f-judul"]};
 const TAGRE=/\[\/?(?:b|i|u|s|merah|biru|hijau|oranye|ungu|abu|besar|kecil|kutipan|judul)\]/g;
-const richFmt=(el,text)=>{el.textContent="";const re=/\[(\/?)(b|i|u|s|merah|biru|hijau|oranye|ungu|abu|besar|kecil|kutipan|judul)\]|\[stiker:(\d{1,2})\]/g,str=String(text),stack=[el];let last=0,m;
-const add=t=>{if(t)stack[stack.length-1].append(document.createTextNode(t))};
+const richFmt=(el,text,notes,u)=>{el.textContent="";const re=/\[(\/?)(b|i|u|s|merah|biru|hijau|oranye|ungu|abu|besar|kecil|kutipan|judul)\]|\[stiker:(\d{1,2})\]|\{\{([\s\S]*?)\}\}/g,str=String(text),stack=[el];let last=0,m;
+const top=()=>stack[stack.length-1],add=t=>{if(t)top().append(document.createTextNode(t))};
 while((m=re.exec(str))){add(str.slice(last,m.index));last=re.lastIndex;
-if(m[3]){const i=document.createElement("img");i.className="stk";i.src="stiker-"+m[3]+".png";i.alt="stiker";i.loading="lazy";i.onerror=()=>i.remove();stack[stack.length-1].append(i)}
-else if(!m[1]){const d=TG[m[2]],n=document.createElement(d[0]);if(d[1])n.className=d[1];n.dataset.t=m[2];stack[stack.length-1].append(n);stack.push(n)}
+if(m[4]!==undefined){if(notes){notes.push(m[4]);const n=notes.length,a=document.createElement("a");a.className="fnref";a.textContent=String(n);a.id=u+"r"+n;a.href="#"+u+"fn"+n;a.title="Catatan kaki "+n;a.onclick=e=>{e.preventDefault();const t=document.getElementById(u+"fn"+n);if(t)t.scrollIntoView({block:"center",behavior:"smooth"})};top().append(a)}else add(m[0])}
+else if(m[3]){const i=document.createElement("img");i.className="stk";i.src="stiker-"+m[3]+".png";i.alt="stiker";i.loading="lazy";i.onerror=()=>i.remove();top().append(i)}
+else if(!m[1]){const d=TG[m[2]],n=document.createElement(d[0]);if(d[1])n.className=d[1];n.dataset.t=m[2];top().append(n);stack.push(n)}
 else{for(let k=stack.length-1;k>0;k--){if(stack[k].dataset.t===m[2]){stack.length=k;break}}}}
 add(str.slice(last))};
+// Tulisan dengan catatan kaki: {{isi catatan}} menjadi angka kecil, dan daftar "Catatan Kaki" muncul di akhir tulisan
+const noteSeq=[0];
+const richNotes=(el,text)=>{const notes=[],u="n"+(++noteSeq[0])+"-";richFmt(el,text,notes,u);if(!notes.length)return;
+const fn=document.createElement("div");fn.className="fns";const h=document.createElement("h4");h.textContent="Catatan Kaki";fn.append(h);const ol=document.createElement("ol");
+notes.forEach((n,i)=>{const li=document.createElement("li");li.id=u+"fn"+(i+1);const sp=document.createElement("span");richFmt(sp,n);li.append(sp);const b=document.createElement("a");b.textContent=" \u21A9";b.href="#"+u+"r"+(i+1);b.onclick=e=>{e.preventDefault();const t=document.getElementById(u+"r"+(i+1));if(t)t.scrollIntoView({block:"center",behavior:"smooth"})};li.append(b);ol.append(li)});
+fn.append(ol);el.append(fn)};
 const COLS=[["merah","#c0312f"],["biru","#2c5fd6"],["hijau","#2e7d32"],["oranye","#d46a00"],["ungu","#7b3fb0"],["abu","#6b6b6b"]];
 const fmtBar=ta=>{const bar=document.createElement("div"),pv=document.createElement("div");bar.className="fbar";pv.className="fprev body";pv.hidden=true;
 const ping=()=>ta.dispatchEvent(new Event("input"));
@@ -314,10 +326,11 @@ const mk=(label,title,fn,cls)=>{const b=document.createElement("button");b.type=
 [["B","b","Tebal"],["I","i","Miring"],["U","u","Garis bawah"],["S","s","Coret"]].forEach(x=>{const b=mk(x[0],x[2],()=>wrap(x[1]));if(x[1]==="b")b.style.fontWeight="800";if(x[1]==="i")b.style.fontStyle="italic";if(x[1]==="u")b.style.textDecoration="underline";if(x[1]==="s")b.style.textDecoration="line-through"});
 COLS.forEach(c=>{const b=mk("","Warna "+c[0],()=>wrap(c[0]),"sw");b.style.background=c[1]});
 [["A+","besar","Teks besar"],["A\u2212","kecil","Teks kecil"],["\u275D","kutipan","Kutipan"],["H","judul","Judul bagian"]].forEach(x=>mk(x[0],x[2],()=>wrap(x[1])));
+mk("\u00B9 Catatan kaki","Catatan kaki: teks yang dipilih menjadi catatan kaki",()=>{const s=ta.selectionStart,e=ta.selectionEnd,sel=ta.value.slice(s,e);ta.setRangeText(sel?"{{"+sel+"}}":"{{isi catatan kaki}}",s,e,"end");ta.focus();ping()});
 mk("\u2715 Format","Hapus format",()=>{const s=ta.selectionStart,e=ta.selectionEnd;if(s!==e){ta.setRangeText(ta.value.slice(s,e).replace(TAGRE,""),s,e,"select")}else if(confirm("Hapus semua format di tulisan ini?"))ta.value=ta.value.replace(TAGRE,"");ping()});
-mk("\uD83D\uDC41 Pratinjau","Tampilkan atau sembunyikan pratinjau",()=>{pv.hidden=!pv.hidden;if(!pv.hidden)richFmt(pv,ta.value)});
-ta.addEventListener("input",()=>{if(!pv.hidden)richFmt(pv,ta.value)});
-ta.before(bar);ta.after(pv)};
+mk("\uD83D\uDC41 Pratinjau","Tampilkan atau sembunyikan pratinjau",()=>{pv.hidden=!pv.hidden;if(!pv.hidden)richNotes(pv,ta.value)});
+ta.addEventListener("input",()=>{if(!pv.hidden)richNotes(pv,ta.value)});
+const hint=document.createElement("small");hint.className="note";hint.textContent="Catatan kaki: ketik {{isi catatan}} atau pilih teks lalu klik \u00B9 Catatan kaki.";ta.before(bar);bar.after(hint);ta.after(pv)};
 const picker=ta=>{const w=document.createElement("div"),bar=document.createElement("div"),pn=document.createElement("div");bar.className="pkb";pn.className="pkp";pn.hidden=true;let mode="";
 const ins=t=>{ta.setRangeText(t,ta.selectionStart,ta.selectionEnd,"end");ta.focus()};
 const mk=(label,m,fill)=>{const b=document.createElement("button");b.type="button";b.textContent=label;b.onclick=()=>{if(mode===m){pn.hidden=true;mode="";return}mode=m;pn.textContent="";fill();pn.hidden=false};bar.append(b)};
@@ -333,7 +346,7 @@ const msg=t=>{$("msg").textContent=t},fmt=ms=>ms?new Date(ms).toLocaleDateString
 const ms=d=>{const c=d.createdAt;return c&&c.toMillis?c.toMillis():0};
 function grid(){G.textContent="";const vis=topics.filter(t=>t.kind!=="tweet");if(!vis.length){G.innerHTML='<p class="note">Belum ada curhatan.</p>';return}
 vis.forEach(t=>{const c=document.createElement("article"),h=document.createElement("h3"),s=document.createElement("small"),p=document.createElement("p");c.className="tcard";c.tabIndex=0;c.setAttribute("role","button");
-h.textContent=t.title;s.textContent=fmt(ms(t));p.textContent=t.text.replace(/\[stiker:\d+\]/g,"").replace(TAGRE,"").replace(/\s+/g," ").slice(0,160);c.append(h,s,p);
+h.textContent=t.title;s.textContent=fmt(ms(t));p.textContent=t.text.replace(/\[stiker:\d+\]/g,"").replace(TAGRE,"").replace(/\{\{[\s\S]*?\}\}/g,"").replace(/\s+/g," ").slice(0,160);c.append(h,s,p);
 c.onclick=()=>open(t.id);c.onkeydown=e=>{if(e.key==="Enter")open(t.id)};G.append(c)})}
 fs.onSnapshot(fs.collection(db,"topics"),s=>{topics=s.docs.filter(d=>d.id!=="current").map(d=>({id:d.id,...d.data({serverTimestamps:"estimate"})})).sort((a,b)=>ms(b)-ms(a));grid();const m=location.hash.match(/^#t=(.+)$/);if(m&&!cur&&topics.some(t=>t.id===m[1]))open(m[1])},e=>{G.innerHTML='<p class="note">Curhatan belum bisa dimuat ('+e.code+').</p>'});
 const GONE="Komentar ini telah dihapus oleh penulis.";
@@ -351,7 +364,7 @@ e.append(b,p);
 if(hid){const n=document.createElement("small");n.className="modl";n.textContent=admin?"Disembunyikan dari pengunjung (blur).":"Komentar disembunyikan oleh penulis.";e.append(n)}
 if(admin){e.append(btn(hid?"Tampilkan":"Sembunyikan",()=>upd(d,{mod:hid?fs.deleteField():"blur",modAt:fs.serverTimestamp()})),btn("Hapus",()=>{if(confirm("Hapus komentar ini? Isinya akan dihapus dan diganti tulisan \"Komentar ini telah dihapus oleh penulis.\""))upd(d,{mod:"removed",text:"",modAt:fs.serverTimestamp()})}))}
 l.append(e)})}
-function open(id){const t=topics.find(x=>x.id===id);if(!t)return;cur=t;closeEdit();$("tp-t").textContent=t.kind==="tweet"?"Kicauan Diaz Hardika":t.title;$("tp-d").textContent=fmt(ms(t));richFmt($("tp-b"),t.text);
+function open(id){const t=topics.find(x=>x.id===id);if(!t)return;cur=t;closeEdit();$("tp-t").textContent=t.kind==="tweet"?"Kicauan Diaz Hardika":t.title;$("tp-d").textContent=fmt(ms(t));richNotes($("tp-b"),t.text);
 const u=location.origin+location.pathname+"#t="+id,e=encodeURIComponent;
 $("s-wa").href="https://wa.me/?text="+e(t.title+" "+u);$("s-fb").href="https://www.facebook.com/sharer/sharer.php?u="+e(u);$("s-x").href="https://twitter.com/intent/tweet?text="+e(t.title)+"&url="+e(u);
 $("s-cp").onclick=async()=>{try{await navigator.clipboard.writeText(u);$("s-cp").textContent="Tersalin"}catch(x){prompt("Salin tautan:",u)}};$("s-cp").textContent="Salin tautan";
@@ -376,7 +389,7 @@ function closeEdit(){$("te-box").hidden=true;$("tp-t").hidden=false;$("tp-b").hi
 $("tp-edit").onclick=()=>{if(!cur)return;const tw=cur.kind==="tweet";$("te-t").hidden=tw;$("te-t").value=cur.title||"";$("te-b").value=cur.text||"";$("te-m").textContent="";$("te-box").hidden=false;$("tp-t").hidden=true;$("tp-b").hidden=true;$("tp-edit").hidden=true};
 $("te-x").onclick=closeEdit;
 $("te-go").onclick=async()=>{const t=$("te-t").value.trim(),b=$("te-b").value.trim(),tw=cur&&cur.kind==="tweet";if(!cur)return;if(!b||(!tw&&!t)){$("te-m").textContent="Judul dan isi wajib diisi.";return}
-try{await auth.currentUser.getIdToken(true);const data={text:b,updatedAt:fs.serverTimestamp()};if(!tw)data.title=t;await fs.updateDoc(fs.doc(db,"topics",cur.id),data);cur.text=b;if(!tw)cur.title=t;richFmt($("tp-b"),b);$("tp-t").textContent=tw?"Kicauan Diaz Hardika":t;closeEdit()}catch(x){$("te-m").textContent="Gagal simpan: "+(x.code||x.message)}};
+try{await auth.currentUser.getIdToken(true);const data={text:b,updatedAt:fs.serverTimestamp()};if(!tw)data.title=t;await fs.updateDoc(fs.doc(db,"topics",cur.id),data);cur.text=b;if(!tw)cur.title=t;richNotes($("tp-b"),b);$("tp-t").textContent=tw?"Kicauan Diaz Hardika":t;closeEdit()}catch(x){$("te-m").textContent="Gagal simpan: "+(x.code||x.message)}};
 $("tp-del").onclick=async()=>{if(cur&&confirm("Hapus curhatan ini? Komentarnya tidak ikut tampil lagi.")){try{await fs.deleteDoc(fs.doc(db,"topics",cur.id));$("tp").close()}catch(x){msg("Gagal hapus: "+x.code)}}};
 }catch(e){console.error(e);G.innerHTML='<p class="note">Curhatan belum bisa dimuat.</p>'}
 </script>
